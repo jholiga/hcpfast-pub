@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "hcpfast"
+  },
+  "targets": {
+    "hcpfast": {
+      "hosting": {
+        "HCPFast": [
+          "hcpfast"
+        ]
+      }
+    }
+  }
+}

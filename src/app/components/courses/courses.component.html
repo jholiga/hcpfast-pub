@@ -1,0 +1,69 @@
+<div class="courses">
+    <div class="header">
+        <h2 class="display-2 mt-2 m-1">Courses</h2>
+        <p>Input your courses below to get started.</p>
+    </div>
+    <div class="inputCourses">
+        <div class="accordion accordion-flush" id="courses">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingOne">
+                    <button class="accordion-button collapsed new-course" data-bs-toggle="modal" data-bs-target="#courseInputModal" aria-expanded="false">
+                        Add a course...
+                    </button>
+                </h2>
+            </div>
+            <div *ngFor="let course of courses; let i = index;" class="accordion-item">
+                <h2 class="accordion-header" id="flush-heading{{ i }}">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" attr.data-bs-target="#flush-collapse{{ i }}" aria-expanded="false" attr.aria-controls="flush-collapse{{ i }}">
+                        <p class="text-dark" style="font-size: 20px;">{{ course.name }}</p>
+                    </button>
+                </h2>
+                <div id="flush-collapse{{ i }}" class="accordion-collapse collapse" attr.aria-labelledby="flush-heading{{ i }}" attr.data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body row justify-content-between">
+                        <div class="col-9 row" style="font-size: 25px; font-weight: bold;">
+                            <p class="col-6" style="font-size: 20px;">Course Rating: {{ course.rating }}</p>
+                            <p class="col-6" style="font-size: 20px;">Slope Rating: {{ course.slope }}</p>
+                        </div>
+                        <button class="btn btn-danger col-3" id="courseDeleteButton" (click)="dataService.deleteCourse(course.id)">Delete course</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal for course Creation -->
+<div class="courseModal">
+    <div class="modal fade" id="courseInputModal" tabindex="-1" aria-labelledby="courseInput" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add Course</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form (submit)="addCourse()">
+                    <div class="modal-body">
+                        <label for="courseName" class="form-label">Course Name:</label>
+                        <div class="input-group mb-3">
+                            <input type="text" name="courseName" class="form-control" id="courseName" [(ngModel)]="course">
+                        </div>
+                        <label for="courseRating" class="form-label">Course Rating:</label>
+                        <div class="input-group mb-3">
+                            <input type="text" name="courseRating" class="form-control" id="courseRating" [(ngModel)]="courseRating">
+                        </div>
+                        <label for="slopeRating" class="form-label">Slope Rating:</label>
+                        <div class="input-group mb-3">
+                            <input type="text" name="slopeRating" class="form-control" id="slopeRating" [(ngModel)]="slopeRating">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button class="btn btn-primary" data-bs-dismiss="modal">Add Course</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<app-toolbar></app-toolbar>
