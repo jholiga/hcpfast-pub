@@ -1,0 +1,9 @@
+.signup-button {
+    background-color: #ff4f00;
+    color: white;
+}
+
+.signup-page {
+    overflow: auto;
+    overflow-x: hidden;
+}

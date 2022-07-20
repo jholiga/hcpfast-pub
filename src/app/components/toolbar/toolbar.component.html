@@ -1,0 +1,13 @@
+<div class="toolbar">
+    <div class="row">
+        <ul class="nav nav-pills nav-fill">
+            <li *ngFor="let item of items; let i = index;" class="nav-item col-sm-6">
+                <a routerLink="/{{ (this.item.linkName) }}" routerLinkActive="active" class="nav-link {{ (this.item.active ? 'active' : '') }}" (click)="togglePage(item.name)">{{ item.name }}</a>
+            </li>
+        </ul>
+    </div>
+    <div class="logout">
+        <button (click)="auth.signOut()" class="btn logout-button">Logout</button>
+    </div>
+</div>
+

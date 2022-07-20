@@ -1,0 +1,72 @@
+<div class="hcp">
+    <div class="overview">
+        <h1 *ngIf="rounds.length > 2; else inputRB" class="display-1 mt-2">{{ hcp | async }}</h1>
+        <ng-template #inputRB><h2 class="m-1 display-2 mt-2">{{ hcp | async }}</h2></ng-template>
+        <p *ngIf="rounds.length > 2; else needRounds">HCP</p>
+        <ng-template #needRounds><p>Need to input at least 3 rounds before handicap index can be calculated.</p></ng-template>
+    </div>
+    <div class="recent">
+        <div class="accordion accordion-flush" id="rounds">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingOne">
+                    <p *ngIf="courses.length < 1; else goAddRounds" class="text-center">Add courses first!</p>
+                    <ng-template #goAddRounds>    
+                        <button class="accordion-button collapsed new-round" data-bs-toggle="modal" data-bs-target="#roundInputModal" aria-expanded="false">
+                            Add a round...
+                        </button>
+                    </ng-template>
+                </h2>
+            </div>
+            <div *ngFor="let round of rounds; let i = index;" class="accordion-item">
+                <h2 class="accordion-header" id="flush-heading{{ i }}">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" attr.data-bs-target="#flush-collapse{{ i }}" aria-expanded="false" attr.aria-controls="flush-collapse{{ i }}">
+                        <p class="text-dark" style="font-size: 20px;"><strong>{{ round.score }}   </strong>{{ round.courseName }}</p>
+                    </button>
+                </h2>
+                <div id="flush-collapse{{ i }}" class="accordion-collapse collapse" attr.aria-labelledby="flush-heading{{ i }}" attr.data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body row justify-content-between">
+                        <div class="col-9 row" style="font-size: 25px; font-weight: bold;">
+                            <p class="col-6" style="font-size: 20px;">{{ round.courseName }}</p>
+                            <p class="col-6" style="font-size: 20px;">Score: {{ round.score }}</p>
+                        </div>
+                        <button class="btn btn-danger col-3" id="roundDeleteButton" (click)="dataService.deleteRound(round.id)">Delete Round</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal for Round Creation -->
+<div class="roundModal">
+    <div class="modal fade" id="roundInputModal" tabindex="-1" aria-labelledby="roundInput" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add Round</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form (submit)="addRound()">
+                    <div class="modal-body">
+                        <label for="courseName" class="form-label">Course Name:</label>
+                        <div class="input-group mb-3">
+                            <select name="courseID" id="courseID" [(ngModel)]="courseID">
+                                <option *ngFor="let course of courses; let i = index;" value="{{ course.id }}">{{ course.name }}</option>
+                            </select>
+                        </div>
+                        <label for="roundScore" class="form-label">Gross Score:</label>
+                        <div class="input-group mb-3">
+                            <input type="text" name="roundScore" class="form-control" id="roundScore" [(ngModel)]="roundScore">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button class="btn btn-primary" data-bs-dismiss="modal">Add Round</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<app-toolbar></app-toolbar>
